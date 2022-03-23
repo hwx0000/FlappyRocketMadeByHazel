@@ -5,7 +5,7 @@
 
 namespace Hazel
 {
-	// 其实是个Camera的Wrapper
+	// 其实是个Camera的Wrapper, 当创建出此类对象时, 会在其构造函数里创建一个OrthographicCamera
 	class OrthographicCameraController
 	{
 	public:

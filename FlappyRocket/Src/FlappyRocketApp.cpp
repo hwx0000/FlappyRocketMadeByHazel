@@ -1,6 +1,7 @@
 #include "FlappyRocketApp.h"
 #include "ExampleLayer.h"
 #include "Renderer2DTestLayer.h"
+#include "GameLayer.h"
 
 
 FlappyRocketApp::FlappyRocketApp()
@@ -14,7 +15,8 @@ FlappyRocketApp::FlappyRocketApp()
 	m_LayerStack.PushOverlay(m_ImGuiLayer);
 	
 	//m_LayerStack.PushLayer(new ExampleLayer());
-	m_LayerStack.PushLayer(new Renderer2DTestLayer());
+	//m_LayerStack.PushLayer(new Renderer2DTestLayer());
+	m_LayerStack.PushLayer(new GameLayer());
 
 	//m_Window->SetVSync(true);
 }
