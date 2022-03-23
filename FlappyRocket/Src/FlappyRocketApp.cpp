@@ -1,9 +1,9 @@
-#include "SandboxApp.h"
+#include "FlappyRocketApp.h"
 #include "ExampleLayer.h"
 #include "Renderer2DTestLayer.h"
 
 
-SandboxApp::SandboxApp()
+FlappyRocketApp::FlappyRocketApp()
 {
 	HAZEL_ASSERT(!s_Instance, "Already Exists an application instance");
 
@@ -21,6 +21,6 @@ SandboxApp::SandboxApp()
 
 Hazel::Application* Hazel::CreateApplication() 
 {
-	SandboxApp *s = new SandboxApp();
+	FlappyRocketApp *s = new FlappyRocketApp();
 	return s;
 }
