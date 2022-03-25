@@ -32,13 +32,13 @@ void Level::OnUpdate(Hazel::Timestep ts)
 	if (m_SpacePressed)
 	{
 		auto p = m_Player.GetVelocity();
-		p.y += m_Gravity;
+		p.y += m_Gravity * ts.GetSeconds();
 		m_Player.SetVelocity(p);
 	}
 	else
 	{
 		auto p = m_Player.GetVelocity();
-		p.y -= m_Gravity;
+		p.y -= m_Gravity * ts.GetSeconds();
 		m_Player.SetVelocity(p);
 	}
 }

@@ -11,5 +11,6 @@ bin-int/
 *.vcxproj.user
 *.vcxproj.filters
 *.sln
+*.json
 
 imgui.ini

@@ -38,7 +38,7 @@ private:
 	float m_PillarTarget = 30.0f;
 	int m_PillarIndex = 0;
 	glm::vec3 m_PillarHSV = { 0.0f, 0.8f, 0.8f };
-	float m_Gravity = 0.2f;
+	float m_Gravity = 25.0f;
 
 	float m_PlayerSpeed = 0.05f;
 	Player m_Player;
