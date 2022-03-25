@@ -23,6 +23,10 @@ void Level::Reset()
 
 void Level::OnUpdate(Hazel::Timestep ts)
 {
+	auto pos = m_Player.GetPosition();
+	auto  s = ts.GetSeconds();
+	pos += m_Player.GetVelocity() * ts.GetSeconds();
+	m_Player.SetPosition(pos);
 }
 
 void Level::OnRender()

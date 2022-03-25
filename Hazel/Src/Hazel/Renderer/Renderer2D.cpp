@@ -118,7 +118,11 @@ namespace Hazel
 		s_Data->Shader->UploadUniformVec4("u_Color", { 1.0f, 1.0f, 1.0f, 1.0f });
 		glm::mat4 transform = glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
 		transform = glm::rotate(transform, glm::radians(rotatedAngle), { 0, 0, 1 });
-		transform = glm::translate(transform, position);
+		
+		// 这种写法是为了让position为Global Position
+		// 直接写glm::translate(transform, position)得到的是基于LocalRotation进行平移得到的Transform
+		glm::mat4 translation = glm::translate(glm::mat4(1.0f), position);
+		transform = translation * transform;
 
 		s_Data->Shader->UploadUniformMat4("u_Transform", transform);
 		RenderCommand::DrawIndexed(s_Data->QuadVertexArray);

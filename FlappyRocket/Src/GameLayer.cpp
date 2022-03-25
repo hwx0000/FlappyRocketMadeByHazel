@@ -35,13 +35,17 @@ void GameLayer::OnEvent(Hazel::Event &)
 
 void GameLayer::OnUpdate(const Hazel::Timestep& ts)
 {
+	m_Level->OnUpdate(ts);
+
 	// 每帧开始Clear
 	Hazel::RenderCommand::Clear();
 	Hazel::RenderCommand::ClearColor(glm::vec4(1.0f, 0.0f, 1.0f, 1.0f));
 
+	auto pos = m_Level->GetPlayer().GetPosition();
+	auto angle = m_Level->GetPlayer().GetRotation();
 	Hazel::Renderer2D::BeginScene(m_OrthoCameraController.GetCamera());
 	{
-		Hazel::Renderer2D::DrawQuad({ 0,0,0 }, 0, { 0.2f, 0.2f }, m_Level->GetPlayer().GetTexture());
+		Hazel::Renderer2D::DrawQuad({ pos.x, pos.y, 0 }, angle, { 0.2f, 0.2f }, m_Level->GetPlayer().GetTexture());
 	}
 	Hazel::Renderer2D::EndScene();
 }
