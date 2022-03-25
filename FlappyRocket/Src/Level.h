@@ -25,6 +25,7 @@ public:
 	bool IsGameOver() const { return m_GameOver; }
 	void SetPlayer(const Player&p) { m_Player = p; }
 	Player& GetPlayer() { return m_Player; }
+	void SetSpacePressed(bool pressed) { m_SpacePressed = pressed; }
 
 private:
 	void CreatePillar(int index, float offset);
@@ -37,11 +38,12 @@ private:
 	float m_PillarTarget = 30.0f;
 	int m_PillarIndex = 0;
 	glm::vec3 m_PillarHSV = { 0.0f, 0.8f, 0.8f };
-	float m_Gravity = 0.4f;
+	float m_Gravity = 0.2f;
 
-	float m_PlayerSpeed = 0.1f;
+	float m_PlayerSpeed = 0.05f;
 	Player m_Player;
 	std::vector<Column> m_Collumns;							// 关卡信息数组
 	std::shared_ptr<Hazel::Texture2D> m_TriangleTexture;    // 关卡对应的Texture2D数组
+	bool m_SpacePressed;
 };
 

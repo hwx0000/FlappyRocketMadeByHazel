@@ -29,8 +29,20 @@ void GameLayer::OnDettach()
 {
 }
 
-void GameLayer::OnEvent(Hazel::Event &)
+void GameLayer::OnEvent(Hazel::Event &e)
 {
+	if (e.GetEventType() == Hazel::EventType::KeyPressed)
+	{
+		Hazel::KeyPressedEvent* ep = dynamic_cast<Hazel::KeyPressedEvent*>(&e);
+		if (ep->GetKeycode() == HZ_KEY_SPACE)
+			m_Level->SetSpacePressed(true);
+	}
+	else if(e.GetEventType() == Hazel::EventType::KeyReleased)
+	{
+		Hazel::KeyReleasedEvent* er = dynamic_cast<Hazel::KeyReleasedEvent*>(&e);
+		if (er->GetKeycode() == HZ_KEY_SPACE)
+			m_Level->SetSpacePressed(false);
+	}
 }
 
 void GameLayer::OnUpdate(const Hazel::Timestep& ts)
