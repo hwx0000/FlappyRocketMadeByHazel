@@ -1,5 +1,6 @@
 #pragma once
 #include "Hazel.h"
+#include "Level.h"
 
 class GameLayer : public Hazel::Layer
 {
@@ -14,7 +15,7 @@ public:
 
 private:
 	Hazel::OrthographicCameraController m_OrthoCameraController;
-	std::shared_ptr<Hazel::Texture2D> m_Texture2D;
+	std::shared_ptr<Level> m_Level;
 
 	glm::vec4 m_FlatColor = glm::vec4(0.2, 0.3, 0.8, 1.0);
 
