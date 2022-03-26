@@ -1,9 +1,11 @@
 #include "GameLayer.h"
 #include <filesystem>
 
-// 默认正交相机的radio为16:9, zoom为1
-GameLayer::GameLayer(const std::string& name): m_OrthoCameraController(1.7778f, 1.0f)
+
+GameLayer::GameLayer(const std::string& name)
 {
+	m_Level = std::make_shared<Level>();
+
 	Hazel::Renderer2D::Init();
 
 	std::string texturePath = std::filesystem::current_path().string() + "\\Resources\\Rocket.png";
@@ -11,7 +13,6 @@ GameLayer::GameLayer(const std::string& name): m_OrthoCameraController(1.7778f, 
 	Player p("RocketPlayer");
 	p.SetTexture(Hazel::Texture2D::Create(texturePath));
 
-	m_Level = std::make_shared<Level>();
 	m_Level->SetPlayer(p);
 }
 
@@ -55,7 +56,11 @@ void GameLayer::OnUpdate(const Hazel::Timestep& ts)
 
 	auto pos = m_Level->GetPlayer().GetPosition();
 	auto angle = m_Level->GetPlayer().GetRotation();
-	Hazel::Renderer2D::BeginScene(m_OrthoCameraController.GetCamera());
+
+	auto camera = m_Level->GetCameraController().GetCamera();
+	auto c = camera.GetPosition();
+	auto c2 = camera.GetRotation();
+	Hazel::Renderer2D::BeginScene(m_Level->GetCameraController().GetCamera());
 	{
 		Hazel::Renderer2D::DrawQuad({ pos.x, pos.y, 0 }, angle, { 0.2f, 0.2f }, m_Level->GetPlayer().GetTexture());
 	}

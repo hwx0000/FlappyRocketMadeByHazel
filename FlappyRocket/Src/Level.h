@@ -15,6 +15,8 @@ struct Column
 class Level
 {
 public:
+	// 默认正交相机的radio为16:9, zoom为1
+	Level() : m_OrthoCameraController(1.7778f, 1.0f) {};
 	void Init();
 	void Reset();
 
@@ -23,8 +25,12 @@ public:
 	void OnImGuiRender();
 
 	bool IsGameOver() const { return m_GameOver; }
+	
+	Hazel::OrthographicCameraController& GetCameraController() { return m_OrthoCameraController; }
+
 	void SetPlayer(const Player&p) { m_Player = p; }
 	Player& GetPlayer() { return m_Player; }
+
 	void SetSpacePressed(bool pressed) { m_SpacePressed = pressed; }
 
 private:
@@ -39,11 +45,12 @@ private:
 	int m_PillarIndex = 0;
 	glm::vec3 m_PillarHSV = { 0.0f, 0.8f, 0.8f };
 	float m_Gravity = 25.0f;
-
 	float m_PlayerSpeed = 0.05f;
+
 	Player m_Player;
 	std::vector<Column> m_Collumns;							// 关卡信息数组
 	std::shared_ptr<Hazel::Texture2D> m_TriangleTexture;    // 关卡对应的Texture2D数组
-	bool m_SpacePressed;
+	bool m_SpacePressed = false;
+	Hazel::OrthographicCameraController m_OrthoCameraController;
 };
 

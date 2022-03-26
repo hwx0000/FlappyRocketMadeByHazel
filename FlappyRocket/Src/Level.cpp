@@ -41,6 +41,8 @@ void Level::OnUpdate(Hazel::Timestep ts)
 		p.y -= m_Gravity * ts.GetSeconds();
 		m_Player.SetVelocity(p);
 	}
+
+
 }
 
 void Level::OnRender()

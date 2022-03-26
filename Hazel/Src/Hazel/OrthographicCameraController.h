@@ -27,5 +27,4 @@ namespace Hazel
 		bool m_Rotatable = true;
 		OrthographicCamera m_Camera;
 	};
-
 }

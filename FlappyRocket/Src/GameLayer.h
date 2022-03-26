@@ -14,7 +14,6 @@ public:
 	void OnImGuiRender() override;
 
 private:
-	Hazel::OrthographicCameraController m_OrthoCameraController;
 	std::shared_ptr<Level> m_Level;
 
 	glm::vec4 m_FlatColor = glm::vec4(0.2, 0.3, 0.8, 1.0);
