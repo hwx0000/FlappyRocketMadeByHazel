@@ -40,13 +40,14 @@ public:
 
 	std::shared_ptr<Hazel::Texture2D> GetTriangleTex() { return m_TriangleTexture; }
 private:
-	void CreatePillar(int index, float offset);
 	bool CollisionTest();
+	void UpdateColumns();
 
 	void GameOver();
 private:
 	bool m_GameOver = false;
 
+	float m_LastPlayerPosX = 0.0f;
 	float m_PillarTarget = 30.0f;
 	int m_PillarIndex = 0;
 	glm::vec3 m_PillarHSV = { 0.0f, 0.8f, 0.8f };

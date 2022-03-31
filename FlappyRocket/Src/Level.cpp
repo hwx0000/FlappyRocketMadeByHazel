@@ -1,13 +1,33 @@
 #include "Level.h"
+#include "Random.h"
 #include <filesystem>
-
-void Level::CreatePillar(int index, float offset)
-{
-}
 
 bool Level::CollisionTest()
 {
 	return false;
+}
+
+void Level::UpdateColumns()
+{
+	// 从第一个Column开始, Player每走三分之一个屏幕宽度, 就Update最左边的Columns
+	float currentPosX = m_Player.GetPosition().x;
+	float columnIntervelX = 4.0f / 3.0f;
+
+	int last = int(m_LastPlayerPosX / columnIntervelX);
+	int now = int(currentPosX / columnIntervelX);
+
+	if (now > last && now != 1)
+	{
+		m_Collumns[0] = m_Collumns[1];
+		m_Collumns[1] = m_Collumns[2];
+		m_Collumns[2] = m_Collumns[3];
+		m_Collumns[3] = m_Collumns[4];
+		m_Collumns[4].bottomPos.x += columnIntervelX;
+		m_Collumns[4].topPos.x += columnIntervelX;
+
+		m_Collumns[4].bottomScale = { Random::Float() * 1.5f + 0.5f, Random::Float() * 1.5f + 0.5f };
+		m_Collumns[4].topScale = { Random::Float() * 1.5f + 0.5f, Random::Float() * 1.5f + 0.5f };
+	}
 }
 
 void Level::GameOver()
@@ -19,29 +39,16 @@ Level::Level() :m_OrthoCameraController(1.7778f, 1.0f)
 	// 因为我们的屏幕一般是16:9，或者16:10的，所以这里的横向区间比纵向区间一般要是这个比例，所以我现在把横轴长度改成4，纵轴长度改成了4/16 * 9 = 2.25
 	m_OrthoCameraController.GetCamera() = Hazel::OrthographicCamera(-2.0f, 2.0f, -1.225f, 1.225f);
 
-	Column c1;
-	c1.topPos = {0, 1.0f, 0};
-	c1.topScale = {0.8f, 0.8f};
-	c1.bottomPos = {0, -1.0f, 0};
-	c1.bottomScale = {1.5f, 1.5f};
-	m_Collumns.push_back(c1);
-
 	float columnIntervelX = 4.0f / 3;
-	// 屏幕的横向距离为4.0f, 根据GamePlay, 一个屏幕最多显示5个Collumn, 三个Column距离为屏幕长度
-	// 所以Column之间距离为4.0f /3
-	Column c2;
-	c2.topPos = { columnIntervelX * 1, 1.0f, 0 };
-	c2.topScale = { 2.0f, 1.2f };
-	c2.bottomPos = { columnIntervelX * 1, -1.0f, 0 };
-	c2.bottomScale = { 0.7f, 1.5f };
-	m_Collumns.push_back(c2);
-
-	Column c3;
-	c3.topPos = { columnIntervelX * 2, 1.0f, 0 };
-	c3.topScale = { 1.0f, 1.7f };
-	c3.bottomPos = { columnIntervelX * 2, -1.0f, 0 };
-	c3.bottomScale = { 1.3f, 2.4f };
-	m_Collumns.push_back(c3);
+	for (size_t i = 0; i < 5; i++)
+	{
+		Column c;
+		c.topPos = { i * columnIntervelX, 1.0f, 0 };
+		c.topScale =  { Random::Float() * 1.5f + 0.5f, Random::Float() * 1.5f + 0.5f };
+		c.bottomPos = { i * columnIntervelX, -1.0f, 0 };
+		c.bottomScale = { Random::Float() * 1.5f + 0.5f, Random::Float() * 1.5f + 0.5f };
+		m_Collumns.push_back(c);
+	}
 
 	std::string texturePath = std::filesystem::current_path().string() + "\\Resources\\Triangle.png";
 	m_TriangleTexture = Hazel::Texture2D::Create(texturePath);
@@ -74,6 +81,7 @@ void Level::OnUpdate(Hazel::Timestep ts)
 		deltaPos.y = 0.0f;
 	}
 
+	m_LastPlayerPosX = m_Player.GetPosition().x;
 	m_Player.SetPosition(pos);
 
 
@@ -96,6 +104,8 @@ void Level::OnUpdate(Hazel::Timestep ts)
 		p.y -= m_Gravity * ts.GetSeconds();
 		m_Player.SetVelocity(p);
 	}
+
+	UpdateColumns();
 }
 
 void Level::OnRender()
