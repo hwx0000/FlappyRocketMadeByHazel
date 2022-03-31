@@ -50,12 +50,13 @@ private:
 	float m_PillarTarget = 30.0f;
 	int m_PillarIndex = 0;
 	glm::vec3 m_PillarHSV = { 0.0f, 0.8f, 0.8f };
-	float m_Gravity = 20.0f;
-	float m_PlayerSpeed = 0.05f;
+	float m_Gravity = 28.0f;
+	float m_UpAcceleration = 60.0f;
+	float m_PlayerSpeed = 0.075f;
 
 	Player m_Player;
-	std::vector<Column> m_Collumns;							// 关卡信息数组
-	std::shared_ptr<Hazel::Texture2D> m_TriangleTexture;    // 关卡对应的Texture2D数组
+	std::vector<Column> m_Collumns;									// 关卡信息数组
+	std::shared_ptr<Hazel::Texture2D> m_TriangleTexture;			// 关卡对应的Texture2D数组
 	bool m_SpacePressed = false;
 	Hazel::OrthographicCameraController m_OrthoCameraController;
 };
