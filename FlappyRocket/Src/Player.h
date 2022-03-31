@@ -34,7 +34,7 @@ public:
 	uint32_t GetScore() const { return (uint32_t)((m_Position.x + 10.0f) / 10.0f); }
 private:
 	glm::vec2 m_Position = { 0.0f, 0.0f };
-	glm::vec2 m_Velocity = { 5.0f, 0.0f };
+	glm::vec2 m_Velocity = { 10.0f, 0.0f };
 
 	float m_EnginePower = 0.5f;
 

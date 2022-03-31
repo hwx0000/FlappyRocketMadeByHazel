@@ -26,6 +26,23 @@ Level::Level() :m_OrthoCameraController(1.7778f, 1.0f)
 	c1.bottomScale = {1.5f, 1.5f};
 	m_Collumns.push_back(c1);
 
+	float columnIntervelX = 4.0f / 3;
+	// 屏幕的横向距离为4.0f, 根据GamePlay, 一个屏幕最多显示5个Collumn, 三个Column距离为屏幕长度
+	// 所以Column之间距离为4.0f /3
+	Column c2;
+	c2.topPos = { columnIntervelX * 1, 1.0f, 0 };
+	c2.topScale = { 2.0f, 1.2f };
+	c2.bottomPos = { columnIntervelX * 1, -1.0f, 0 };
+	c2.bottomScale = { 0.7f, 1.5f };
+	m_Collumns.push_back(c2);
+
+	Column c3;
+	c3.topPos = { columnIntervelX * 2, 1.0f, 0 };
+	c3.topScale = { 1.0f, 1.7f };
+	c3.bottomPos = { columnIntervelX * 2, -1.0f, 0 };
+	c3.bottomScale = { 1.3f, 2.4f };
+	m_Collumns.push_back(c3);
+
 	std::string texturePath = std::filesystem::current_path().string() + "\\Resources\\Triangle.png";
 	m_TriangleTexture = Hazel::Texture2D::Create(texturePath);
 }
