@@ -16,7 +16,7 @@ class Level
 {
 public:
 	// 默认正交相机的radio为16:9, zoom为1
-	Level() : m_OrthoCameraController(1.7778f, 1.0f) {};
+	Level();
 	void Init();
 	void Reset();
 
@@ -25,14 +25,16 @@ public:
 	void OnImGuiRender();
 
 	bool IsGameOver() const { return m_GameOver; }
-	
+
 	Hazel::OrthographicCameraController& GetCameraController() { return m_OrthoCameraController; }
 
 	void SetPlayer(const Player&p) { m_Player = p; }
 	Player& GetPlayer() { return m_Player; }
 
 	void SetSpacePressed(bool pressed) { m_SpacePressed = pressed; }
+	std::vector<Column>& GetColumns() { return m_Collumns; }
 
+	std::shared_ptr<Hazel::Texture2D> GetTriangleTex() { return m_TriangleTexture; }
 private:
 	void CreatePillar(int index, float offset);
 	bool CollisionTest();

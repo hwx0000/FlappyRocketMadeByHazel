@@ -1,4 +1,5 @@
 #include "Level.h"
+#include <filesystem>
 
 void Level::CreatePillar(int index, float offset)
 {
@@ -11,6 +12,19 @@ bool Level::CollisionTest()
 
 void Level::GameOver()
 {
+}
+
+Level::Level() :m_OrthoCameraController(1.7778f, 1.0f)
+{
+	Column c1;
+	c1.topPos = {0, 1.0f, 0};
+	c1.topScale = {0.8f, 0.8f};
+	c1.bottomPos = {0, -1.0f, 0};
+	c1.bottomScale = {1.5f, 1.5f};
+	m_Collumns.push_back(c1);
+
+	std::string texturePath = std::filesystem::current_path().string() + "\\Resources\\Triangle.png";
+	m_TriangleTexture = Hazel::Texture2D::Create(texturePath);
 }
 
 void Level::Init()
@@ -41,8 +55,6 @@ void Level::OnUpdate(Hazel::Timestep ts)
 		p.y -= m_Gravity * ts.GetSeconds();
 		m_Player.SetVelocity(p);
 	}
-
-
 }
 
 void Level::OnRender()

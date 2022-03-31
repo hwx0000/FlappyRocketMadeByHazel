@@ -62,6 +62,19 @@ void GameLayer::OnUpdate(const Hazel::Timestep& ts)
 	auto c2 = camera.GetRotation();
 	Hazel::Renderer2D::BeginScene(m_Level->GetCameraController().GetCamera());
 	{
+		const std::vector<Column>& columns = m_Level->GetColumns();
+		std::shared_ptr<Hazel::Texture2D> triTex = m_Level->GetTriangleTex();
+		// 绘制关卡
+		for (size_t i = 0; i < columns.size(); i++)
+		{
+			// Upper triangle
+			Hazel::Renderer2D::DrawQuad(columns[i].topPos, 180.0f, columns[i].topScale, triTex);
+			
+			// Lower triangle
+			Hazel::Renderer2D::DrawQuad(columns[i].bottomPos, 0.0f, columns[i].bottomScale, triTex);
+		}
+
+		// 绘制Player
 		Hazel::Renderer2D::DrawQuad({ pos.x, pos.y, 0 }, angle, { 0.2f, 0.2f }, m_Level->GetPlayer().GetTexture());
 	}
 	Hazel::Renderer2D::EndScene();
