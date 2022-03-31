@@ -4,6 +4,9 @@
 
 bool Level::CollisionTest()
 {
+	if (m_Player.GetPosition().y > 0.99f || m_Player.GetPosition().y < -0.99f)
+		return true;
+
 	return false;
 }
 
@@ -121,6 +124,9 @@ void Level::OnUpdate(Hazel::Timestep ts)
 	}
 
 	UpdateColumns();
+
+	if (CollisionTest())
+		m_DebugCollisions.push_back(m_Player.GetPosition());
 }
 
 glm::vec4 Level::HSVtoRGB(const glm::vec3& hsv)

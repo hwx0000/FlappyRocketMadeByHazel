@@ -63,6 +63,9 @@ private:
 	bool m_SpacePressed = false;
 	Hazel::OrthographicCameraController m_OrthoCameraController;
 	glm::vec4 m_DynamicColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+public:
+	std::vector<glm::vec2> m_DebugCollisions;
 };
 
 

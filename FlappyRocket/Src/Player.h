@@ -26,7 +26,7 @@ public:
 		return m_Velocity.y * 3.0f - 90.0f; 
 	}
 	const glm::vec2& GetPosition() const { return m_Position; } 
-	void SetPosition(glm::vec2 pos) { m_Position = pos; }
+	void SetPosition(const glm::vec2& pos);
 
 	glm::vec4 GetForward() { return glm::rotate(glm::mat4(1.0f), glm::radians(m_Velocity.y * 3.0f), { 0, 0, 1 }) * glm::vec4(1, 0, 0, 0); }
 	glm::vec2 GetVelocity() { return m_Velocity; }
@@ -47,5 +47,16 @@ private:
 	//
 	std::shared_ptr<Hazel::Texture2D> m_RocketTexture;
 	std::string m_Name;
+
+public:
+	// 向量的齐次坐标为0, 点为1
+	glm::vec4 m_MeshVertices[4]{
+		{ -0.5f, -0.25f, 0.0f , 1.0f },	// 注意, 最后一列必须都是1, 因为他们代表点而不是向量
+		{  0.5f, -0.25f, 0.0f , 1.0f },
+		{  0.5f,  0.25f, 0.0f , 1.0f },
+		{ -0.5f,  0.25f, 0.0f , 1.0f }
+	};
+
+	glm::vec4 m_CurVertices[4];
 };
 

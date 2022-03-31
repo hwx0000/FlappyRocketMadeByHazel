@@ -86,6 +86,18 @@ void GameLayer::OnUpdate(const Hazel::Timestep& ts)
 
 		// 绘制Player
 		Hazel::Renderer2D::DrawQuad({ pos.x, pos.y, 0.1f }, angle, { 0.2f, 0.2f }, m_Level->GetPlayer().GetTexture(), {1.0f, 1.0f, 1.0f, 1.0f});
+	
+		for (size_t i = 0; i < m_Level->m_DebugCollisions.size(); i++)
+		{
+			auto p = m_Level->m_DebugCollisions[i];
+			Hazel::Renderer2D::DrawQuad({ p.x, p.y, 0.1f }, angle, { 0.025f, 0.025f }, { 1.0f, 1.0f, 1.0f, 1.0f });
+		}
+
+		for (size_t i = 0; i < 4; i++)
+		{
+			auto p = m_Level->GetPlayer().m_CurVertices[i];
+			Hazel::Renderer2D::DrawQuad({ p.x, p.y, 0.1f }, angle, { 0.025f, 0.025f }, { 1.0f, 1.0f, 1.0f, 1.0f });
+		}
 	}
 	Hazel::Renderer2D::EndScene();
 }
