@@ -20,6 +20,9 @@ class Level
 public:
 	// 默认正交相机的radio为16:9, zoom为1
 	Level();
+
+	static glm::vec4 HSVtoRGB(const glm::vec3 & hsv);
+
 	void Init();
 	void Reset();
 
@@ -30,6 +33,7 @@ public:
 	bool IsGameOver() const { return m_GameOver; }
 
 	Hazel::OrthographicCameraController& GetCameraController() { return m_OrthoCameraController; }
+	glm::vec4 GetDynamicCollor() { return m_DynamicColor; }
 
 	void SetPlayer(const Player&p) { m_Player = p; }
 	Player& GetPlayer() { return m_Player; }
@@ -47,9 +51,8 @@ private:
 	bool m_GameOver = false;
 
 	float m_LastPlayerPosX = 0.0f;
-	float m_PillarTarget = 30.0f;
-	int m_PillarIndex = 0;
-	glm::vec3 m_PillarHSV = { 0.0f, 0.8f, 0.8f };
+	// 色调盘和半径都是确定的, 只有色调H会改变
+	glm::vec3 m_ColumnHSV = { 0.0f, 0.8f, 0.8f };// H: Hue, S: Saturation,  V: value
 	float m_Gravity = 28.0f;
 	float m_UpAcceleration = 60.0f;
 	float m_PlayerSpeed = 0.075f;
@@ -59,4 +62,7 @@ private:
 	std::shared_ptr<Hazel::Texture2D> m_TriangleTexture;			// 关卡对应的Texture2D数组
 	bool m_SpacePressed = false;
 	Hazel::OrthographicCameraController m_OrthoCameraController;
+	glm::vec4 m_DynamicColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 };
+
+

@@ -71,21 +71,21 @@ void GameLayer::OnUpdate(const Hazel::Timestep& ts)
 		Hazel::Renderer2D::DrawQuad({ pos.x, 0.0f, -0.8f }, 0.0f, { 10.0f, 10.0f }, { 0.3f, 0.3f, 0.3f, 1.0f });
 		
 		// Floor and ceiling, 在player运动的[-1, 1]范围之外绘制border即可
-		Hazel::Renderer2D::DrawQuad({ pos.x, 3.5f }, 0.0f, { 50.0f, 5.0f }, {0.5f, 0.4f, 1.0f, 1.0f});
-		Hazel::Renderer2D::DrawQuad({ pos.x, -3.5f }, 0.0f, { 50.0f, 5.0f }, { 0.5f, 0.4f, 1.0f, 1.0f });
+		Hazel::Renderer2D::DrawQuad({ pos.x, 3.5f }, 0.0f, { 50.0f, 5.0f }, m_Level->GetDynamicCollor());
+		Hazel::Renderer2D::DrawQuad({ pos.x, -3.5f }, 0.0f, { 50.0f, 5.0f }, m_Level->GetDynamicCollor());
 
 
 		for (size_t i = 0; i < columns.size(); i++)
 		{
 			// Upper triangle
-			Hazel::Renderer2D::DrawQuad(columns[i].topPos, 180.0f, columns[i].scale, triTex);
+			Hazel::Renderer2D::DrawQuad(columns[i].topPos, 180.0f, columns[i].scale, triTex, m_Level->GetDynamicCollor());
 			
 			// Lower triangle
-			Hazel::Renderer2D::DrawQuad(columns[i].bottomPos, 0.0f, columns[i].scale, triTex);
+			Hazel::Renderer2D::DrawQuad(columns[i].bottomPos, 0.0f, columns[i].scale, triTex, m_Level->GetDynamicCollor());
 		}
 
 		// 绘制Player
-		Hazel::Renderer2D::DrawQuad({ pos.x, pos.y, 0.1f }, angle, { 0.2f, 0.2f }, m_Level->GetPlayer().GetTexture());
+		Hazel::Renderer2D::DrawQuad({ pos.x, pos.y, 0.1f }, angle, { 0.2f, 0.2f }, m_Level->GetPlayer().GetTexture(), {1.0f, 1.0f, 1.0f, 1.0f});
 	}
 	Hazel::Renderer2D::EndScene();
 }
