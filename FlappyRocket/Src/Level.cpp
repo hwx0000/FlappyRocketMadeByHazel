@@ -22,11 +22,14 @@ void Level::UpdateColumns()
 		m_Collumns[1] = m_Collumns[2];
 		m_Collumns[2] = m_Collumns[3];
 		m_Collumns[3] = m_Collumns[4];
-		m_Collumns[4].bottomPos.x += columnIntervelX;
-		m_Collumns[4].topPos.x += columnIntervelX;
 
-		m_Collumns[4].bottomScale = { Random::Float() * 1.5f + 0.5f, Random::Float() * 1.5f + 0.5f };
-		m_Collumns[4].topScale = { Random::Float() * 1.5f + 0.5f, Random::Float() * 1.5f + 0.5f };
+		float deltaY = -0.5f + Random::Float();
+		float gap = Random::Float() * 0.3f;
+
+		m_Collumns[4].topPos.x += columnIntervelX; 
+		m_Collumns[4].topPos.y = 0.9f + gap + deltaY;
+		m_Collumns[4].bottomPos.x += columnIntervelX;
+		m_Collumns[4].bottomPos.y = -0.9f - gap + deltaY;
 	}
 }
 
@@ -43,10 +46,14 @@ Level::Level() :m_OrthoCameraController(1.7778f, 1.0f)
 	for (size_t i = 0; i < 5; i++)
 	{
 		Column c;
-		c.topPos = { i * columnIntervelX, 1.0f, 0 };
-		c.topScale =  { Random::Float() * 1.5f + 0.5f, Random::Float() * 1.5f + 0.5f };
-		c.bottomPos = { i * columnIntervelX, -1.0f, 0 };
-		c.bottomScale = { Random::Float() * 1.5f + 0.5f, Random::Float() * 1.5f + 0.5f };
+
+		// 整个Player可活动数值区间为[-1.225, 1.225]
+		float deltaY = -0.5f +  Random::Float();
+		float gap = Random::Float() * 0.3f;
+
+		c.topPos = { i * columnIntervelX, 0.9f + gap +deltaY, 0 };
+		c.bottomPos = { i * columnIntervelX, -0.9f  - gap+ deltaY, 0 };// 三角形的高度大概是0.85
+		
 		m_Collumns.push_back(c);
 	}
 

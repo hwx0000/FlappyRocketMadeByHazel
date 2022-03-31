@@ -78,10 +78,10 @@ void GameLayer::OnUpdate(const Hazel::Timestep& ts)
 		for (size_t i = 0; i < columns.size(); i++)
 		{
 			// Upper triangle
-			Hazel::Renderer2D::DrawQuad(columns[i].topPos, 180.0f, columns[i].topScale, triTex);
+			Hazel::Renderer2D::DrawQuad(columns[i].topPos, 180.0f, columns[i].scale, triTex);
 			
 			// Lower triangle
-			Hazel::Renderer2D::DrawQuad(columns[i].bottomPos, 0.0f, columns[i].bottomScale, triTex);
+			Hazel::Renderer2D::DrawQuad(columns[i].bottomPos, 0.0f, columns[i].scale, triTex);
 		}
 
 		// 绘制Player

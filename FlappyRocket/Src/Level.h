@@ -6,10 +6,9 @@
 struct Column
 {
 	glm::vec3 topPos;		
-	glm::vec2 topScale;		// the Column can be expanded in x and y axis
-
 	glm::vec3 bottomPos;	
-	glm::vec2 bottomScale;
+
+	glm::vec2 scale = {1.5f, 2.0f};		// the Column can be expanded in x and y axis
 };
 
 // 对于整个关卡区间的y值: 
