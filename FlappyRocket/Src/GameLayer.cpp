@@ -50,6 +50,7 @@ void GameLayer::OnUpdate(const Hazel::Timestep& ts)
 {
 	m_Level->OnUpdate(ts);
 
+
 	// 每帧开始Clear
 	Hazel::RenderCommand::Clear();
 	Hazel::RenderCommand::ClearColor(glm::vec4(1.0f, 0.0f, 1.0f, 1.0f));
@@ -60,11 +61,24 @@ void GameLayer::OnUpdate(const Hazel::Timestep& ts)
 	auto camera = m_Level->GetCameraController().GetCamera();
 	auto c = camera.GetPosition();
 	auto c2 = camera.GetRotation();
+
 	Hazel::Renderer2D::BeginScene(m_Level->GetCameraController().GetCamera());
 	{
 		const std::vector<Column>& columns = m_Level->GetColumns();
 		std::shared_ptr<Hazel::Texture2D> triTex = m_Level->GetTriangleTex();
+		
+
+		LOG(pos.x);
 		// 绘制关卡
+		// Background
+		Hazel::Renderer2D::DrawQuad({ pos.x, 0.0f, -0.8f }, 0.0f, { 10.0f, 10.0f }, { 0.3f, 0.3f, 0.3f, 1.0f });
+		//Hazel::Renderer2D::DrawQuad({ pos.x, 0.0f, -0.8f }, 0.0f, { 50.0f, 50.0f }, { 1.0f, 0.3f, 0.3f, 1.0f });
+		
+		// Floor and ceiling, 在player运动的[-1, 1]范围之外绘制border即可
+		Hazel::Renderer2D::DrawQuad({ pos.x, 3.5f }, 0.0f, { 50.0f, 5.0f }, {0.5f, 0.4f, 1.0f, 1.0f});
+		Hazel::Renderer2D::DrawQuad({ pos.x, -3.5f }, 0.0f, { 50.0f, 5.0f }, { 0.5f, 0.4f, 1.0f, 1.0f });
+
+
 		for (size_t i = 0; i < columns.size(); i++)
 		{
 			// Upper triangle
@@ -75,11 +89,19 @@ void GameLayer::OnUpdate(const Hazel::Timestep& ts)
 		}
 
 		// 绘制Player
-		Hazel::Renderer2D::DrawQuad({ pos.x, pos.y, 0 }, angle, { 0.2f, 0.2f }, m_Level->GetPlayer().GetTexture());
+		Hazel::Renderer2D::DrawQuad({ pos.x, pos.y, 0.1f }, angle, { 0.2f, 0.2f }, m_Level->GetPlayer().GetTexture());
 	}
 	Hazel::Renderer2D::EndScene();
 }
 
 void GameLayer::OnImGuiRender()
 {
+	auto pos = m_Level->GetPlayer().GetPosition();
+	auto camera = m_Level->GetCameraController().GetCamera();
+	auto c = camera.GetPosition();
+	ImGui::Begin("hahaha");
+	ImGui::Text("pos = %f, %f", pos.x, pos.y);
+	ImGui::Text("cameraPos = %f, %f", c.x, c.y);
+
+	ImGui::End();
 }

@@ -12,6 +12,10 @@ struct Column
 	glm::vec2 bottomScale;
 };
 
+// 对于整个关卡区间的y值: 
+// [-1, 1]为玩家的竖直活动区间
+// [-Infinity, -1]和[1, Infinity]区间为关卡的上下边界
+// 但是由于正交Camera是紧跟Player的, Camera的显示范围为横轴长度为4, 纵轴长度为2.25(16:9)
 class Level
 {
 public:
@@ -55,4 +59,3 @@ private:
 	bool m_SpacePressed = false;
 	Hazel::OrthographicCameraController m_OrthoCameraController;
 };
-

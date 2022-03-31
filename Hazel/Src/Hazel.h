@@ -28,3 +28,5 @@
 #include "Hazel/Debug/Timer.h"
 #include "Hazel/Debug/Instrumentor.h"
 #endif
+
+#include "imgui.h"
