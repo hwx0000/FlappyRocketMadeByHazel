@@ -44,7 +44,10 @@ public:
 	std::shared_ptr<Hazel::Texture2D> GetTriangleTex() { return m_TriangleTexture; }
 private:
 	bool CollisionTest();
+	void CreateInitialColumns();
 	void UpdateColumns();
+
+	void UpdateDebugColumnBounds();
 
 	void GameOver();
 private:
@@ -66,6 +69,15 @@ private:
 
 public:
 	std::vector<glm::vec2> m_DebugCollisions;
+
+	// 向量的齐次坐标为0, 点为1
+	glm::vec4 m_TriVertices[3]{
+		{ 0.4f,  -0.4f, 0.0f, 1.0f },	// 注意, 最后一列必须都是1, 因为他们代表点而不是向量
+		{ 0.0f,   0.4f, 0.0f, 1.0f },
+		{ -0.4f, -0.4f, 0.0f, 1.0f },
+	};
+
+	std::vector<glm::vec4> m_DebugColumnBounds;
 };
 
 

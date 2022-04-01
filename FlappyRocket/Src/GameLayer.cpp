@@ -61,6 +61,7 @@ void GameLayer::OnUpdate(const Hazel::Timestep& ts)
 	auto c = camera.GetPosition();
 	auto c2 = camera.GetRotation();
 
+	// TODO: 其实Render的部分代码可以封装到Level的OnRender函数里的
 	Hazel::Renderer2D::BeginScene(m_Level->GetCameraController().GetCamera());
 	{
 		const std::vector<Column>& columns = m_Level->GetColumns();
@@ -97,6 +98,12 @@ void GameLayer::OnUpdate(const Hazel::Timestep& ts)
 		{
 			auto p = m_Level->GetPlayer().m_CurVertices[i];
 			Hazel::Renderer2D::DrawQuad({ p.x, p.y, 0.1f }, angle, { 0.025f, 0.025f }, { 1.0f, 1.0f, 1.0f, 1.0f });
+		}
+
+		for (size_t i = 0; i < m_Level->m_DebugColumnBounds.size(); i++)
+		{
+			auto p = m_Level->m_DebugColumnBounds[i];
+			Hazel::Renderer2D::DrawQuad({ p.x, p.y, 0.1f }, 0, { 0.025f, 0.025f }, { 1.0f, 1.0f, 1.0f, 1.0f });
 		}
 	}
 	Hazel::Renderer2D::EndScene();

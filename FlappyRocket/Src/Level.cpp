@@ -10,6 +10,26 @@ bool Level::CollisionTest()
 	return false;
 }
 
+void Level::CreateInitialColumns()
+{
+	float columnIntervelX = 4.0f / 3;
+	for (size_t i = 0; i < 5; i++)
+	{
+		Column c;
+
+		// 整个Player可活动数值区间为[-1.225, 1.225]
+		float deltaY = -0.5f + Random::Float();
+		float gap = Random::Float() * 0.3f;
+
+		c.topPos = { i * columnIntervelX, 0.9f + gap + deltaY, 0 };
+		c.bottomPos = { i * columnIntervelX, -0.9f - gap + deltaY, 0 };// 三角形的高度大概是0.85
+
+		m_Collumns.push_back(c);
+	}
+
+	UpdateDebugColumnBounds();
+}
+
 void Level::UpdateColumns()
 {
 	// 从第一个Column开始, Player每走三分之一个屏幕宽度, 就Update最左边的Columns
@@ -34,6 +54,43 @@ void Level::UpdateColumns()
 		m_Collumns[4].bottomPos.x += columnIntervelX;
 		m_Collumns[4].bottomPos.y = -0.9f - gap + deltaY;
 	}
+
+	UpdateDebugColumnBounds();
+}
+
+void Level::UpdateDebugColumnBounds()
+{
+	for (size_t i = 0; i < m_Collumns.size(); i++)
+	{
+		auto col = m_Collumns[i];
+
+		// Upper tri
+		for (size_t i = 0; i < 3; i++)
+		{
+			auto trans = glm::scale(glm::mat4(1.0f), { 1.5f, 2.0f, 1.0f });
+			trans = glm::rotate(trans, glm::radians(180.0f), { 0,0,1 });
+
+			glm::mat4 globalTrans = glm::translate(glm::mat4(1.0f), col.topPos);
+			trans = globalTrans * trans;
+
+			glm::vec4 pos = trans * m_TriVertices[i];
+			m_DebugColumnBounds.push_back(pos);
+		}
+
+
+		// Bottom tri
+		for (size_t i = 0; i < 3; i++)
+		{
+			auto trans = glm::scale(glm::mat4(1.0f), { 1.5f, 2.0f, 1.0f });
+			//trans = glm::rotate(trans, glm::radians(0.0f), { 0,0,1 });
+
+			glm::mat4 globalTrans = glm::translate(glm::mat4(1.0f), col.bottomPos);
+			trans = globalTrans * trans;
+
+			glm::vec4 pos = trans * m_TriVertices[i];
+			m_DebugColumnBounds.push_back(pos);
+		}
+	}
 }
 
 void Level::GameOver()
@@ -45,20 +102,7 @@ Level::Level() :m_OrthoCameraController(1.7778f, 1.0f)
 	// 因为我们的屏幕一般是16:9，或者16:10的，所以这里的横向区间比纵向区间一般要是这个比例，所以我现在把横轴长度改成4，纵轴长度改成了4/16 * 9 = 2.25
 	m_OrthoCameraController.GetCamera() = Hazel::OrthographicCamera(-2.0f, 2.0f, -1.225f, 1.225f);
 
-	float columnIntervelX = 4.0f / 3;
-	for (size_t i = 0; i < 5; i++)
-	{
-		Column c;
-
-		// 整个Player可活动数值区间为[-1.225, 1.225]
-		float deltaY = -0.5f +  Random::Float();
-		float gap = Random::Float() * 0.3f;
-
-		c.topPos = { i * columnIntervelX, 0.9f + gap +deltaY, 0 };
-		c.bottomPos = { i * columnIntervelX, -0.9f  - gap+ deltaY, 0 };// 三角形的高度大概是0.85
-		
-		m_Collumns.push_back(c);
-	}
+	CreateInitialColumns();
 
 	std::string texturePath = std::filesystem::current_path().string() + "\\Resources\\Triangle.png";
 	m_TriangleTexture = Hazel::Texture2D::Create(texturePath);
@@ -74,18 +118,11 @@ void Level::Reset()
 
 void Level::OnUpdate(Hazel::Timestep ts)
 {
+	// Update player's positiion
 	auto pos = m_Player.GetPosition();
 	glm::vec2 deltaPos = glm::vec2(1.0f * m_Player.GetVelocity().x,
 		m_Player.GetForward().y * abs(m_Player.GetVelocity().y)) * ts.GetSeconds() * m_PlayerSpeed;
 	pos = pos + deltaPos;
-
-	// 不断改变HSV里的色调Hue
-	m_ColumnHSV.x += 0.1f * ts;
-	if (m_ColumnHSV.x > 1.0f)
-		m_ColumnHSV.x = 0.0f;
-
-	m_DynamicColor = HSVtoRGB(m_ColumnHSV);
-
 
 	// 高度限制在[-1, 1]区间
 	if (pos.y > 1.f)
@@ -102,6 +139,12 @@ void Level::OnUpdate(Hazel::Timestep ts)
 	m_LastPlayerPosX = m_Player.GetPosition().x;
 	m_Player.SetPosition(pos);
 
+	// 不断改变HSV里的色调Hue
+	m_ColumnHSV.x += 0.1f * ts;
+	if (m_ColumnHSV.x > 1.0f)
+		m_ColumnHSV.x = 0.0f;
+
+	m_DynamicColor = HSVtoRGB(m_ColumnHSV);
 
 	// Camera跟随Player
 	auto s = m_OrthoCameraController.GetCamera().GetPosition();
