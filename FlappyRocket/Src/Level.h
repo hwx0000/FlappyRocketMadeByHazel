@@ -56,8 +56,8 @@ private:
 	float m_LastPlayerPosX = 0.0f;
 	// 色调盘和半径都是确定的, 只有色调H会改变
 	glm::vec3 m_ColumnHSV = { 0.0f, 0.8f, 0.8f };// H: Hue, S: Saturation,  V: value
-	float m_Gravity = 28.0f;
-	float m_UpAcceleration = 60.0f;
+	float m_Gravity = 38.0f;
+	float m_UpAcceleration = 100.0f;
 
 	Player m_Player;
 	std::vector<Column> m_Collumns;									// 关卡信息数组
