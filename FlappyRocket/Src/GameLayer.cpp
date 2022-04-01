@@ -125,12 +125,12 @@ void GameLayer::OnUpdate(const Hazel::Timestep& ts)
 			Hazel::Renderer2D::DrawQuad({ p.x, p.y, 0.1f }, angle, { 0.025f, 0.025f }, { 1.0f, 1.0f, 1.0f, 1.0f });
 		}
 
-		// 绘制Player的Collider
-		for (size_t i = 0; i < 4; i++)
-		{
-			auto p = m_Level->GetPlayer().m_CurVertices[i];
-			Hazel::Renderer2D::DrawQuad({ p.x, p.y, 0.3f }, angle, { 0.025f, 0.025f }, { 1.0f, 1.0f, 1.0f, 1.0f });
-		}
+		//// 绘制Player的Collider
+		//for (size_t i = 0; i < 4; i++)
+		//{
+		//	auto p = m_Level->GetPlayer().m_CurVertices[i];
+		//	Hazel::Renderer2D::DrawQuad({ p.x, p.y, 0.3f }, angle, { 0.025f, 0.025f }, { 1.0f, 1.0f, 1.0f, 1.0f });
+		//}
 
 		//// 绘制代表关卡的三角形的顶点
 		//for (size_t i = 0; i < m_Level->m_ColumnBounds.size(); i++)
