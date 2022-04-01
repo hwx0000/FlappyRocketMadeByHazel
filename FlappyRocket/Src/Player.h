@@ -1,15 +1,14 @@
 #pragma once
 #include "Hazel.h"
+#include "ParticleSystem.h"
 
 class Player
 {
 public:
-	Player(const char* name = "Default Player") : m_Name(name) {};
+	Player(const char* name = "Default Player");
 
-	//void LoadAssets();
-	//void OnUpdate(Hazel::Timestep ts);
-	//void OnRender();
-	//void OnImGuiRender();
+	void OnUpdate(Hazel::Timestep ts);
+	void Render();
 	void Reset();
 
 	void SetTexture(std::shared_ptr <Hazel::Texture2D> tex) { m_RocketTexture = tex; }
@@ -32,6 +31,9 @@ public:
 	glm::vec2 GetVelocity() { return m_Velocity; }
 	void SetVelocity(const glm::vec2& p) { m_Velocity = p; }
 	uint32_t GetScore() const { return (uint32_t)((m_Position.x ) / (4.0f / 3.0f)); }
+	float GetSpeed() { return m_PlayerSpeed; }
+
+	void Emit();
 private:
 	glm::vec2 m_Position = { 0.0f, 0.0f };
 	glm::vec2 m_Velocity = { 10.0f, 0.0f };
@@ -40,14 +42,13 @@ private:
 
 	float m_Time = 0.0f;
 	float m_SmokeEmitInterval = 0.4f;
-	float m_SmokeNextEmitTime = m_SmokeEmitInterval;
 
-	//ParticleProps m_SmokeParticle, m_EngineParticle;
-	//ParticleSystem m_ParticleSystem;
-	//
+	ParticleProperties m_SmokeParticleProps, m_EngineParticleProps;
+	ParticleSystem m_ParticleSystem;
+	
 	std::shared_ptr<Hazel::Texture2D> m_RocketTexture;
 	std::string m_Name;
-
+	
 public:
 	// 向量的齐次坐标为0, 点为1
 	glm::vec4 m_MeshVertices[4]{
@@ -58,5 +59,6 @@ public:
 	};
 
 	glm::vec4 m_CurVertices[4];
+	float m_PlayerSpeed = 0.075f;
 };
 

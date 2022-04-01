@@ -58,7 +58,6 @@ private:
 	glm::vec3 m_ColumnHSV = { 0.0f, 0.8f, 0.8f };// H: Hue, S: Saturation,  V: value
 	float m_Gravity = 28.0f;
 	float m_UpAcceleration = 60.0f;
-	float m_PlayerSpeed = 0.075f;
 
 	Player m_Player;
 	std::vector<Column> m_Collumns;									// 关卡信息数组

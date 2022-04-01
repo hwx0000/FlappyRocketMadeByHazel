@@ -156,10 +156,14 @@ void Level::Reset()
 
 void Level::OnUpdate(Hazel::Timestep ts)
 {
+	m_LastPlayerPosX = m_Player.GetPosition().x;
+	m_Player.OnUpdate(ts);
+
+	// TODO: 下面的代码其实应该放到m_Player.OnUpdate函数里的
 	// Update player's positiion
 	auto pos = m_Player.GetPosition();
 	glm::vec2 deltaPos = glm::vec2(1.0f * m_Player.GetVelocity().x,
-		m_Player.GetForward().y * abs(m_Player.GetVelocity().y)) * ts.GetSeconds() * m_PlayerSpeed;
+		m_Player.GetForward().y * abs(m_Player.GetVelocity().y)) * ts.GetSeconds() * m_Player.GetSpeed();
 	pos = pos + deltaPos;
 
 	// 高度限制在[-1, 1]区间
@@ -174,7 +178,6 @@ void Level::OnUpdate(Hazel::Timestep ts)
 		deltaPos.y = 0.0f;
 	}
 
-	m_LastPlayerPosX = m_Player.GetPosition().x;
 	m_Player.SetPosition(pos);
 
 	// 不断改变HSV里的色调Hue
@@ -211,6 +214,9 @@ void Level::OnUpdate(Hazel::Timestep ts)
 		m_DebugCollisions.push_back(m_Player.GetPosition());
 		GameOver();
 	}
+
+	if (m_SpacePressed)
+		m_Player.Emit();
 }
 
 glm::vec4 Level::HSVtoRGB(const glm::vec3& hsv)

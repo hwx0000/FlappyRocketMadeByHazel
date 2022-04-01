@@ -6,7 +6,7 @@ FlappyRocketApp::FlappyRocketApp()
 {
 	HAZEL_ASSERT(!s_Instance, "Already Exists an application instance");
 
-	m_Window = std::unique_ptr<Hazel::Window>(Hazel::Window::Create());
+	m_Window = std::unique_ptr<Hazel::Window>(Hazel::Window::Create(Hazel::WindowProps("Flappy Rocket", 1280, 720)));
 	m_Window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 
 	m_ImGuiLayer = new Hazel::ImGuiLayer();
