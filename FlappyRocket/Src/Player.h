@@ -10,7 +10,7 @@ public:
 	//void OnUpdate(Hazel::Timestep ts);
 	//void OnRender();
 	//void OnImGuiRender();
-	//void Reset();
+	void Reset();
 
 	void SetTexture(std::shared_ptr <Hazel::Texture2D> tex) { m_RocketTexture = tex; }
 	std::shared_ptr<Hazel::Texture2D> GetTexture() { return m_RocketTexture; }
@@ -31,7 +31,7 @@ public:
 	glm::vec4 GetForward() { return glm::rotate(glm::mat4(1.0f), glm::radians(m_Velocity.y * 3.0f), { 0, 0, 1 }) * glm::vec4(1, 0, 0, 0); }
 	glm::vec2 GetVelocity() { return m_Velocity; }
 	void SetVelocity(const glm::vec2& p) { m_Velocity = p; }
-	uint32_t GetScore() const { return (uint32_t)((m_Position.x + 10.0f) / 10.0f); }
+	uint32_t GetScore() const { return (uint32_t)((m_Position.x ) / (4.0f / 3.0f)); }
 private:
 	glm::vec2 m_Position = { 0.0f, 0.0f };
 	glm::vec2 m_Velocity = { 10.0f, 0.0f };
@@ -51,10 +51,10 @@ private:
 public:
 	// 向量的齐次坐标为0, 点为1
 	glm::vec4 m_MeshVertices[4]{
-		{ -0.5f, -0.25f, 0.0f , 1.0f },	// 注意, 最后一列必须都是1, 因为他们代表点而不是向量
-		{  0.5f, -0.25f, 0.0f , 1.0f },
-		{  0.5f,  0.25f, 0.0f , 1.0f },
-		{ -0.5f,  0.25f, 0.0f , 1.0f }
+		{ -0.4f, -0.20f, 0.0f , 1.0f },	// 注意, 最后一列必须都是1, 因为他们代表点而不是向量
+		{  0.4f, -0.20f, 0.0f , 1.0f },
+		{  0.4f,  0.20f, 0.0f , 1.0f },
+		{ -0.4f,  0.20f, 0.0f , 1.0f }
 	};
 
 	glm::vec4 m_CurVertices[4];

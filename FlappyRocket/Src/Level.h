@@ -47,7 +47,7 @@ private:
 	void CreateInitialColumns();
 	void UpdateColumns();
 
-	void UpdateDebugColumnBounds();
+	void UpdateColumnBounds();
 
 	void GameOver();
 private:
@@ -65,10 +65,10 @@ private:
 	std::shared_ptr<Hazel::Texture2D> m_TriangleTexture;			// 关卡对应的Texture2D数组
 	bool m_SpacePressed = false;
 	Hazel::OrthographicCameraController m_OrthoCameraController;
-	glm::vec4 m_DynamicColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glm::vec4 m_DynamicColor = { 1.0f, 0.3f, 0.3f, 1.0f };
 
 public:
-	std::vector<glm::vec2> m_DebugCollisions;
+	std::vector<glm::vec2> m_DebugCollisions;// 存储Player发生碰撞时的Player的位置
 
 	// 向量的齐次坐标为0, 点为1
 	glm::vec4 m_TriVertices[3]{
@@ -77,7 +77,7 @@ public:
 		{ -0.4f, -0.4f, 0.0f, 1.0f },
 	};
 
-	std::vector<glm::vec4> m_DebugColumnBounds;
+	std::vector<glm::vec4> m_ColumnBounds;
 };
 
 

@@ -1,5 +1,15 @@
 #include "Player.h"
 
+void Player::Reset()
+{
+	m_Position = { 0.0f, 0.0f };
+	m_Velocity = { 10.0f, 0.0f };
+
+	//m_EnginePower = 0.5f;
+
+	m_Time = 0.0f;
+}
+
 void Player::SetPosition(const glm::vec2& pos)
 {
 	m_Position = pos;
